@@ -58,6 +58,14 @@ const concepts = [
     conceptId: 'invariants' as const,
     totalMilestones: 4,
   },
+  {
+    title: 'Birthday Paradox',
+    icon: '\u{1F382}',
+    href: '/concepts/birthday-paradox',
+    description: 'Add people to a room and watch collisions arrive shockingly early. Run Monte Carlo simulations and explore hash collision risk.',
+    conceptId: 'birthday-paradox' as const,
+    totalMilestones: 4,
+  },
 ] as const;
 
 export default function LandingCards() {

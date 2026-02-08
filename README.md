@@ -6,7 +6,7 @@ Interactive playgrounds that turn abstract discrete math concepts into aha momen
 
 ## Current Status
 
-**7 of 9 concept interactives are implemented:**
+**8 of 9 concept interactives are implemented:**
 
 | Concept                                | Route                          | Status  |
 | -------------------------------------- | ------------------------------ | ------- |
@@ -17,7 +17,7 @@ Interactive playgrounds that turn abstract discrete math concepts into aha momen
 | Permutations ("Rune Lock")             | `/concepts/permutations`       | Done    |
 | All-Pairs ("Stress Test")              | `/concepts/all-pairs`          | Done    |
 | Invariants ("Invariant Detective")     | `/concepts/invariants`         | Done    |
-| Birthday Paradox ("Collision Counter") | `/concepts/birthday-paradox`   | Planned |
+| Birthday Paradox ("Collision Counter") | `/concepts/birthday-paradox`   | Done    |
 | Recursion ("Recurrence Tree Builder")  | `/concepts/recursion`          | Planned |
 
 Stretch goals: `/playground` combined "boss level", `/concepts/toposort` task ordering.
@@ -45,7 +45,8 @@ src/
 │       ├── subsets.astro
 │       ├── permutations.astro
 │       ├── all-pairs.astro
-│       └── invariants.astro
+│       ├── invariants.astro
+│       └── birthday-paradox.astro
 ├── layouts/
 │   └── BaseLayout.astro               # Shell: nav, dark mode, footer
 ├── components/
@@ -93,11 +94,16 @@ src/
 │   │   ├── PairCounter.tsx
 │   │   ├── PairNetwork.tsx
 │   │   └── GrowthChart.tsx
-│   └── invariants/                   # Invariant detective interactive
-│       ├── InvariantsPlayground.tsx    # Orchestrator
-│       ├── ScenarioSelector.tsx
-│       ├── StateVisualizer.tsx
-│       └── InvariantPanel.tsx
+│   ├── invariants/                   # Invariant detective interactive
+│   │   ├── InvariantsPlayground.tsx    # Orchestrator
+│   │   ├── ScenarioSelector.tsx
+│   │   ├── StateVisualizer.tsx
+│   │   └── InvariantPanel.tsx
+│   └── birthday-paradox/            # Birthday paradox interactive
+│       ├── BirthdayPlayground.tsx     # Orchestrator
+│       ├── BirthdayGrid.tsx
+│       ├── ProbabilityPanel.tsx
+│       └── PersonFeed.tsx
 ├── hooks/
 │   ├── useAnimationController.ts      # Step-based animation (pre-computed arrays)
 │   ├── useProgress.ts                 # Milestone tracking per concept
@@ -110,7 +116,8 @@ src/
 │   ├── subsets.ts                     # Subset generation & combinatorics
 │   ├── permutations.ts               # Factorial, permutation generation & comparison
 │   ├── pairs.ts                      # All-pairs generation, scenarios & quadratic growth
-│   └── invariants.ts                 # Invariant scenarios, bug injection & proof annotations
+│   ├── invariants.ts                 # Invariant scenarios, bug injection & proof annotations
+│   └── birthday.ts                  # Birthday paradox probability, Monte Carlo & hash presets
 ├── content/
 │   └── concepts/                      # Markdown with frontmatter
 │       ├── graph-traversal.md         # title, description, milestones[]
@@ -119,7 +126,8 @@ src/
 │       ├── subsets.md
 │       ├── permutations.md
 │       ├── all-pairs.md
-│       └── invariants.md
+│       ├── invariants.md
+│       └── birthday-paradox.md
 ├── content.config.ts                  # Astro content collection schema
 └── styles/
     └── global.css                     # Tailwind imports + custom properties
@@ -163,7 +171,7 @@ npm run preview    # Preview production build locally
 **M4 — Full concept set** (in progress)
 
 - Subsets, Permutations, All-Pairs, and Invariants interactives done
-- Remaining 2 interactives: Birthday Paradox, Recursion
+- Remaining 1 interactive: Recursion
 
 **M5 — Stretch**
 
@@ -186,10 +194,10 @@ Each new concept follows this pattern:
 
 **Epic B — Shared engine** (partially done):
 
-- Done: animation hook, progress API, graph/growth/hashing/subsets/permutations/pairs/invariants math
+- Done: animation hook, progress API, graph/growth/hashing/subsets/permutations/pairs/invariants/birthday math
 - Remaining: seeded RNG, chart primitives, input helpers, query param state codec
 
-**Epic C — Interactives**: C1 Growth Rates (done), C2 Graphs (done), C3 Hashing (done), C4 Subsets (done), C5 Permutations (done), C6 All-Pairs (done), C7 Invariants (done), C8-C9 planned
+**Epic C — Interactives**: C1 Growth Rates (done), C2 Graphs (done), C3 Hashing (done), C4 Subsets (done), C5 Permutations (done), C6 All-Pairs (done), C7 Invariants (done), C8 Birthday Paradox (done), C9 planned
 
 **Epic D — Finish**: consistency pass, Lighthouse/perf baseline, tour mode, launch checklist
 

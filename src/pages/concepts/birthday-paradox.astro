@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BirthdayPlayground from '../../components/birthday-paradox/BirthdayPlayground';
+import '../../styles/global.css';
+---
+
+<BaseLayout title="Birthday Paradox">
+  <section class="max-w-6xl mx-auto px-4 py-10">
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-3">Collision Counter</h1>
+      <p class="text-text-muted dark:text-text-dark-muted max-w-2xl text-lg">
+        Pick a room size, simulate random birthdays, and watch how quickly collisions
+        happen &mdash; sooner than you think. Run Monte Carlo trials to see the math confirmed.
+      </p>
+    </div>
+
+    <BirthdayPlayground client:load />
+  </section>
+</BaseLayout>
