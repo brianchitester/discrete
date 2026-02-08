@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --version:*)",
+      "Bash(npm --version)",
+      "WebSearch",
+      "Bash(npm create:*)",
+      "Bash(npx:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial commit: MVP with 3 interactive concept playgrounds\n\nDiscrete math learning site built with Astro + React islands.\nIncludes graph traversal \\(BFS/DFS maze\\), growth rates \\(Big-O race\\),\nand hashing collisions \\(pigeonhole\\) interactives, plus shared engine\n\\(animation controller, progress tracking, dark mode\\).\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(npm run dev:*)",
+      "Bash(ls:*)",
+      "Bash(dir:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd Subsets interactive — concept #4 \"Subset Dungeon\"\n\nToggle emoji elements to build a set and watch all 2^n subsets appear in\na dot-grid. Includes animated counter, C\\(n,k\\) size distribution chart\nwith click-to-filter, sampling for n>10, and 4 progress milestones.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(xargs:*)"
+    ]
+  }
+}

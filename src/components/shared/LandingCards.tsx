@@ -34,6 +34,14 @@ const concepts = [
     conceptId: 'subsets' as const,
     totalMilestones: 4,
   },
+  {
+    title: 'Permutations',
+    icon: '\u{1F510}',
+    href: '/concepts/permutations',
+    description: 'Arrange mystical runes in a lock and discover why n! grows so shockingly fast — factorial dwarfs exponential.',
+    conceptId: 'permutations' as const,
+    totalMilestones: 4,
+  },
 ] as const;
 
 export default function LandingCards() {
