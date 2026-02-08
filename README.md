@@ -6,7 +6,7 @@ Interactive playgrounds that turn abstract discrete math concepts into aha momen
 
 ## Current Status
 
-**8 of 9 concept interactives are implemented:**
+**9 of 9 concept interactives are implemented:**
 
 | Concept                                | Route                          | Status  |
 | -------------------------------------- | ------------------------------ | ------- |
@@ -18,7 +18,7 @@ Interactive playgrounds that turn abstract discrete math concepts into aha momen
 | All-Pairs ("Stress Test")              | `/concepts/all-pairs`          | Done    |
 | Invariants ("Invariant Detective")     | `/concepts/invariants`         | Done    |
 | Birthday Paradox ("Collision Counter") | `/concepts/birthday-paradox`   | Done    |
-| Recursion ("Recurrence Tree Builder")  | `/concepts/recursion`          | Planned |
+| Recursion ("Recurrence Tree Builder")  | `/concepts/recursion`          | Done    |
 
 Stretch goals: `/playground` combined "boss level", `/concepts/toposort` task ordering.
 
@@ -46,7 +46,8 @@ src/
 │       ├── permutations.astro
 │       ├── all-pairs.astro
 │       ├── invariants.astro
-│       └── birthday-paradox.astro
+│       ├── birthday-paradox.astro
+│       └── recursion.astro
 ├── layouts/
 │   └── BaseLayout.astro               # Shell: nav, dark mode, footer
 ├── components/
@@ -99,11 +100,15 @@ src/
 │   │   ├── ScenarioSelector.tsx
 │   │   ├── StateVisualizer.tsx
 │   │   └── InvariantPanel.tsx
-│   └── birthday-paradox/            # Birthday paradox interactive
-│       ├── BirthdayPlayground.tsx     # Orchestrator
-│       ├── BirthdayGrid.tsx
-│       ├── ProbabilityPanel.tsx
-│       └── PersonFeed.tsx
+│   ├── birthday-paradox/            # Birthday paradox interactive
+│   │   ├── BirthdayPlayground.tsx     # Orchestrator
+│   │   ├── BirthdayGrid.tsx
+│   │   ├── ProbabilityPanel.tsx
+│   │   └── PersonFeed.tsx
+│   └── recursion/                   # Recurrence tree builder interactive
+│       ├── RecursionPlayground.tsx    # Orchestrator
+│       ├── RecurrenceTree.tsx
+│       └── TreeStats.tsx
 ├── hooks/
 │   ├── useAnimationController.ts      # Step-based animation (pre-computed arrays)
 │   ├── useProgress.ts                 # Milestone tracking per concept
@@ -117,7 +122,8 @@ src/
 │   ├── permutations.ts               # Factorial, permutation generation & comparison
 │   ├── pairs.ts                      # All-pairs generation, scenarios & quadratic growth
 │   ├── invariants.ts                 # Invariant scenarios, bug injection & proof annotations
-│   └── birthday.ts                  # Birthday paradox probability, Monte Carlo & hash presets
+│   ├── birthday.ts                  # Birthday paradox probability, Monte Carlo & hash presets
+│   └── recursion.ts                # Recurrence tree builders, layout & stat helpers
 ├── content/
 │   └── concepts/                      # Markdown with frontmatter
 │       ├── graph-traversal.md         # title, description, milestones[]
@@ -127,7 +133,8 @@ src/
 │       ├── permutations.md
 │       ├── all-pairs.md
 │       ├── invariants.md
-│       └── birthday-paradox.md
+│       ├── birthday-paradox.md
+│       └── recursion.md
 ├── content.config.ts                  # Astro content collection schema
 └── styles/
     └── global.css                     # Tailwind imports + custom properties
@@ -168,10 +175,9 @@ npm run preview    # Preview production build locally
 
 - 3 priority interactives: Graphs, Big-O, Hashing
 
-**M4 — Full concept set** (in progress)
+**M4 — Full concept set** (complete)
 
-- Subsets, Permutations, All-Pairs, and Invariants interactives done
-- Remaining 1 interactive: Recursion
+- Subsets, Permutations, All-Pairs, Invariants, and Recursion interactives done
 
 **M5 — Stretch**
 
@@ -179,25 +185,16 @@ npm run preview    # Preview production build locally
 - Shareable seeds via URL query params
 - Tour mode (next/prev concept navigation)
 
-### Planned Concepts
-
-Each new concept follows this pattern:
-
-| Concept          | Interactive               | Core Aha                                             |
-| ---------------- | ------------------------- | ---------------------------------------------------- |
-| Birthday Paradox | "Collision Counter"       | Collisions arrive shockingly early (Monte Carlo sim) |
-| Recursion        | "Recurrence Tree Builder" | Visualize how recurrences unfold into trees          |
-
 ### Epic Breakdown
 
 **Epic A — Site scaffold** (done): project init, routes, layout, progress, design system
 
 **Epic B — Shared engine** (partially done):
 
-- Done: animation hook, progress API, graph/growth/hashing/subsets/permutations/pairs/invariants/birthday math
+- Done: animation hook, progress API, graph/growth/hashing/subsets/permutations/pairs/invariants/birthday/recursion math
 - Remaining: seeded RNG, chart primitives, input helpers, query param state codec
 
-**Epic C — Interactives**: C1 Growth Rates (done), C2 Graphs (done), C3 Hashing (done), C4 Subsets (done), C5 Permutations (done), C6 All-Pairs (done), C7 Invariants (done), C8 Birthday Paradox (done), C9 planned
+**Epic C — Interactives**: C1 Growth Rates (done), C2 Graphs (done), C3 Hashing (done), C4 Subsets (done), C5 Permutations (done), C6 All-Pairs (done), C7 Invariants (done), C8 Birthday Paradox (done), C9 Recursion (done)
 
 **Epic D — Finish**: consistency pass, Lighthouse/perf baseline, tour mode, launch checklist
 

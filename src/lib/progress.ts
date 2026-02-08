@@ -1,4 +1,4 @@
-export type ConceptId = 'graph-traversal' | 'growth-rates' | 'hashing-collisions' | 'subsets' | 'permutations' | 'all-pairs' | 'invariants' | 'birthday-paradox';
+export type ConceptId = 'graph-traversal' | 'growth-rates' | 'hashing-collisions' | 'subsets' | 'permutations' | 'all-pairs' | 'invariants' | 'birthday-paradox' | 'recursion';
 
 export interface ProgressData {
   milestones: string[];

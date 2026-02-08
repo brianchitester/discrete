@@ -66,6 +66,14 @@ const concepts = [
     conceptId: 'birthday-paradox' as const,
     totalMilestones: 4,
   },
+  {
+    title: 'Recursion',
+    icon: '\u{1F333}',
+    href: '/concepts/recursion',
+    description: 'Pick a recurrence template, slide n, and watch the recursion tree grow. See how divide & conquer yields logarithmic depth.',
+    conceptId: 'recursion' as const,
+    totalMilestones: 4,
+  },
 ] as const;
 
 export default function LandingCards() {
