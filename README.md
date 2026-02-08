@@ -6,7 +6,7 @@ Interactive playgrounds that turn abstract discrete math concepts into aha momen
 
 ## Current Status
 
-**5 of 9 concept interactives are implemented:**
+**6 of 9 concept interactives are implemented:**
 
 | Concept | Route | Status |
 |---------|-------|--------|
@@ -15,7 +15,7 @@ Interactive playgrounds that turn abstract discrete math concepts into aha momen
 | Hashing Collisions ("Hash Carnival") | `/concepts/hashing-collisions` | Done |
 | Subsets ("Subset Dungeon") | `/concepts/subsets` | Done |
 | Permutations ("Rune Lock") | `/concepts/permutations` | Done |
-| All-Pairs ("Stress Test") | `/c/pairs` | Planned |
+| All-Pairs ("Stress Test") | `/concepts/all-pairs` | Done |
 | Invariants ("Invariant Detective") | `/c/invariants` | Planned |
 | Birthday Paradox ("Collision Counter") | `/c/birthday-paradox` | Planned |
 | Recursion ("Recurrence Tree Builder") | `/c/recursion` | Planned |
@@ -43,7 +43,8 @@ src/
 │       ├── growth-rates.astro
 │       ├── hashing-collisions.astro
 │       ├── subsets.astro
-│       └── permutations.astro
+│       ├── permutations.astro
+│       └── all-pairs.astro
 ├── layouts/
 │   └── BaseLayout.astro               # Shell: nav, dark mode, footer
 ├── components/
@@ -78,13 +79,19 @@ src/
 │   │   ├── SubsetCounter.tsx
 │   │   ├── SubsetGrid.tsx
 │   │   └── SizeDistributionChart.tsx
-│   └── permutations/                 # Factorial/permutations interactive
-│       ├── PermutationsPlayground.tsx   # Orchestrator
-│       ├── RunePool.tsx
-│       ├── LockDisplay.tsx
-│       ├── PermutationGrid.tsx
-│       ├── FactorialCounter.tsx
-│       └── GrowthComparisonChart.tsx
+│   ├── permutations/                 # Factorial/permutations interactive
+│   │   ├── PermutationsPlayground.tsx   # Orchestrator
+│   │   ├── RunePool.tsx
+│   │   ├── LockDisplay.tsx
+│   │   ├── PermutationGrid.tsx
+│   │   ├── FactorialCounter.tsx
+│   │   └── GrowthComparisonChart.tsx
+│   └── all-pairs/                    # All-pairs stress test interactive
+│       ├── AllPairsPlayground.tsx      # Orchestrator
+│       ├── NodePool.tsx
+│       ├── PairCounter.tsx
+│       ├── PairNetwork.tsx
+│       └── GrowthChart.tsx
 ├── hooks/
 │   ├── useAnimationController.ts      # Step-based animation (pre-computed arrays)
 │   ├── useProgress.ts                 # Milestone tracking per concept
@@ -95,14 +102,16 @@ src/
 │   ├── growth.ts                      # Growth function computations
 │   ├── hashing.ts                     # Hash function implementations
 │   ├── subsets.ts                     # Subset generation & combinatorics
-│   └── permutations.ts               # Factorial, permutation generation & comparison
+│   ├── permutations.ts               # Factorial, permutation generation & comparison
+│   └── pairs.ts                      # All-pairs generation, scenarios & quadratic growth
 ├── content/
 │   └── concepts/                      # Markdown with frontmatter
 │       ├── graph-traversal.md         # title, description, milestones[]
 │       ├── growth-rates.md
 │       ├── hashing-collisions.md
 │       ├── subsets.md
-│       └── permutations.md
+│       ├── permutations.md
+│       └── all-pairs.md
 ├── content.config.ts                  # Astro content collection schema
 └── styles/
     └── global.css                     # Tailwind imports + custom properties
@@ -141,8 +150,8 @@ npm run preview    # Preview production build locally
 - 3 priority interactives: Graphs, Big-O, Hashing
 
 **M4 — Full concept set** (in progress)
-- Subsets and Permutations interactives done
-- Remaining 4 interactives: Pairs, Invariants, Birthday Paradox, Recursion
+- Subsets, Permutations, and All-Pairs interactives done
+- Remaining 3 interactives: Invariants, Birthday Paradox, Recursion
 
 **M5 — Stretch**
 - Playground "boss level" combining concepts
@@ -155,7 +164,6 @@ Each new concept follows this pattern:
 
 | Concept | Interactive | Core Aha |
 |---------|------------|----------|
-| All-Pairs | "Stress Test" | C(n,2) grows quadratically — every pair counts |
 | Invariants | "Invariant Detective" | Some quantity never changes, no matter the moves |
 | Birthday Paradox | "Collision Counter" | Collisions arrive shockingly early (Monte Carlo sim) |
 | Recursion | "Recurrence Tree Builder" | Visualize how recurrences unfold into trees |
@@ -165,10 +173,10 @@ Each new concept follows this pattern:
 **Epic A — Site scaffold** (done): project init, routes, layout, progress, design system
 
 **Epic B — Shared engine** (partially done):
-- Done: animation hook, progress API, graph/growth/hashing/subsets/permutations math
+- Done: animation hook, progress API, graph/growth/hashing/subsets/permutations/pairs math
 - Remaining: seeded RNG, chart primitives, input helpers, query param state codec
 
-**Epic C — Interactives**: C1 Growth Rates (done), C2 Graphs (done), C3 Hashing (done), C4 Subsets (done), C5 Permutations (done), C6-C9 planned
+**Epic C — Interactives**: C1 Growth Rates (done), C2 Graphs (done), C3 Hashing (done), C4 Subsets (done), C5 Permutations (done), C6 All-Pairs (done), C7-C9 planned
 
 **Epic D — Finish**: consistency pass, Lighthouse/perf baseline, tour mode, launch checklist
 
@@ -203,6 +211,8 @@ Each new concept follows this pattern:
 5. Add nav link in `src/layouts/BaseLayout.astro`
 
 6. Update the `ConceptId` type in `src/lib/progress.ts`
+
+7. Add entry to the `concepts` array in `src/components/shared/LandingCards.tsx`
 
 ## Launch Checklist
 
