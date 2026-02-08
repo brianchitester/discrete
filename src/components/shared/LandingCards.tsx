@@ -42,6 +42,14 @@ const concepts = [
     conceptId: 'permutations' as const,
     totalMilestones: 4,
   },
+  {
+    title: 'All-Pairs',
+    icon: '\u{1F91D}',
+    href: '/concepts/all-pairs',
+    description: 'Add participants and watch every possible pair appear. C(n,2) grows quadratically — every new addition connects to everyone.',
+    conceptId: 'all-pairs' as const,
+    totalMilestones: 4,
+  },
 ] as const;
 
 export default function LandingCards() {
