@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SubsetsPlayground from '../../components/subsets/SubsetsPlayground';
+import '../../styles/global.css';
+---
+
+<BaseLayout title="Subset Dungeon: The Power of 2^n">
+  <section class="max-w-6xl mx-auto px-4 py-10">
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-2">
+        Subset Dungeon: The Power of 2<sup>n</sup>
+      </h1>
+      <p class="text-text-muted dark:text-text-dark-muted text-lg max-w-2xl">
+        Toggle elements to build a set and watch every possible subset appear.
+        Each new element doubles the count — even small sets produce a shocking number of subsets.
+      </p>
+    </div>
+
+    <SubsetsPlayground client:load />
+  </section>
+</BaseLayout>

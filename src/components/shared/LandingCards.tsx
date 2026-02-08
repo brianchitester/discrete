@@ -26,6 +26,14 @@ const concepts = [
     conceptId: 'hashing-collisions' as const,
     totalMilestones: 4,
   },
+  {
+    title: 'Subsets',
+    icon: '\u{1F3F0}',
+    href: '/concepts/subsets',
+    description: 'Toggle elements and watch 2^n subsets appear. Feel how fast exponential growth really is.',
+    conceptId: 'subsets' as const,
+    totalMilestones: 4,
+  },
 ] as const;
 
 export default function LandingCards() {

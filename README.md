@@ -6,14 +6,14 @@ Interactive playgrounds that turn abstract discrete math concepts into aha momen
 
 ## Current Status
 
-**3 of 9 concept interactives are implemented** (MVP-complete for the priority set):
+**4 of 9 concept interactives are implemented:**
 
 | Concept | Route | Status |
 |---------|-------|--------|
 | Graph Traversal ("Maze Runner") | `/concepts/graph-traversal` | Done |
 | Growth Rates ("Beat the Clock") | `/concepts/growth-rates` | Done |
 | Hashing Collisions ("Hash Carnival") | `/concepts/hashing-collisions` | Done |
-| Subsets ("Subset Dungeon") | `/c/subsets` | Planned |
+| Subsets ("Subset Dungeon") | `/concepts/subsets` | Done |
 | Permutations ("Rune Lock") | `/c/permutations` | Planned |
 | All-Pairs ("Stress Test") | `/c/pairs` | Planned |
 | Invariants ("Invariant Detective") | `/c/invariants` | Planned |
@@ -41,7 +41,8 @@ src/
 │   └── concepts/
 │       ├── graph-traversal.astro      # Concept pages (one per interactive)
 │       ├── growth-rates.astro
-│       └── hashing-collisions.astro
+│       ├── hashing-collisions.astro
+│       └── subsets.astro
 ├── layouts/
 │   └── BaseLayout.astro               # Shell: nav, dark mode, footer
 ├── components/
@@ -64,12 +65,18 @@ src/
 │   │   ├── RaceChart.tsx
 │   │   ├── RaceControls.tsx
 │   │   └── ComplexityTable.tsx
-│   └── hashing/                      # Pigeonhole/hash interactive
-│       ├── HashingPlayground.tsx       # Orchestrator
-│       ├── BucketVisualizer.tsx
-│       ├── DraggableItem.tsx
-│       ├── HashFunctionSelector.tsx
-│       └── CollisionCounter.tsx
+│   ├── hashing/                      # Pigeonhole/hash interactive
+│   │   ├── HashingPlayground.tsx       # Orchestrator
+│   │   ├── BucketVisualizer.tsx
+│   │   ├── DraggableItem.tsx
+│   │   ├── HashFunctionSelector.tsx
+│   │   └── CollisionCounter.tsx
+│   └── subsets/                      # Subset enumeration interactive
+│       ├── SubsetsPlayground.tsx       # Orchestrator
+│       ├── ElementPool.tsx
+│       ├── SubsetCounter.tsx
+│       ├── SubsetGrid.tsx
+│       └── SizeDistributionChart.tsx
 ├── hooks/
 │   ├── useAnimationController.ts      # Step-based animation (pre-computed arrays)
 │   ├── useProgress.ts                 # Milestone tracking per concept
@@ -78,12 +85,14 @@ src/
 │   ├── progress.ts                    # localStorage progress API
 │   ├── graph.ts                       # Graph generation & traversal logic
 │   ├── growth.ts                      # Growth function computations
-│   └── hashing.ts                     # Hash function implementations
+│   ├── hashing.ts                     # Hash function implementations
+│   └── subsets.ts                     # Subset generation & combinatorics
 ├── content/
 │   └── concepts/                      # Markdown with frontmatter
 │       ├── graph-traversal.md         # title, description, milestones[]
 │       ├── growth-rates.md
-│       └── hashing-collisions.md
+│       ├── hashing-collisions.md
+│       └── subsets.md
 ├── content.config.ts                  # Astro content collection schema
 └── styles/
     └── global.css                     # Tailwind imports + custom properties
@@ -121,8 +130,9 @@ npm run preview    # Preview production build locally
 **M3 — MVP launch** (complete)
 - 3 priority interactives: Graphs, Big-O, Hashing
 
-**M4 — Full concept set** (next)
-- Remaining 6 interactives: Subsets, Permutations, Pairs, Invariants, Birthday Paradox, Recursion
+**M4 — Full concept set** (in progress)
+- Subsets interactive done
+- Remaining 5 interactives: Permutations, Pairs, Invariants, Birthday Paradox, Recursion
 
 **M5 — Stretch**
 - Playground "boss level" combining concepts
@@ -147,10 +157,10 @@ Each new concept follows this pattern:
 **Epic A — Site scaffold** (done): project init, routes, layout, progress, design system
 
 **Epic B — Shared engine** (partially done):
-- Done: animation hook, progress API, graph/growth/hashing math
+- Done: animation hook, progress API, graph/growth/hashing/subsets math
 - Remaining: seeded RNG, chart primitives, input helpers, query param state codec
 
-**Epic C — Interactives**: C1 Growth Rates (done), C2 Graphs (done), C3 Hashing (done), C4-C9 planned
+**Epic C — Interactives**: C1 Growth Rates (done), C2 Graphs (done), C3 Hashing (done), C4 Subsets (done), C5-C9 planned
 
 **Epic D — Finish**: consistency pass, Lighthouse/perf baseline, tour mode, launch checklist
 
