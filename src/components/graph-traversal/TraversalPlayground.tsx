@@ -16,13 +16,13 @@ import TraversalControls from './TraversalControls';
 import Legend from '../shared/Legend';
 import InfoPanel from '../shared/InfoPanel';
 
-const ROWS = 12;
-const COLS = 12;
+const ROWS = 21;
+const COLS = 21;
 
 type Algorithm = 'bfs' | 'dfs' | 'race';
 
 const START: GridCell = { row: 1, col: 1 };
-const END: GridCell = { row: 10, col: 10 };
+const END: GridCell = { row: 19, col: 19 };
 
 const legendItems = [
   { color: '#22c55e', label: 'Start' },

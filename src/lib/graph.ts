@@ -168,20 +168,69 @@ function reconstructPath(
   return path;
 }
 
-export function generateMaze(rows: number, cols: number, wallDensity = 0.25): Grid {
-  const grid: Grid = Array.from({ length: rows }, () =>
-    Array.from({ length: cols }, () => Math.random() < wallDensity)
-  );
-  // Ensure start and end are clear
-  grid[1][1] = false;
-  grid[rows - 2][cols - 2] = false;
-  // Clear cells around start and end
-  if (rows > 2 && cols > 2) {
-    grid[1][2] = false;
-    grid[2][1] = false;
-    grid[rows - 2][cols - 3] = false;
-    grid[rows - 3][cols - 2] = false;
+/**
+ * Generate a classic maze using Recursive Backtracking (randomized DFS).
+ *
+ * The grid uses a wall-passage pattern: passage cells sit at odd coordinates,
+ * wall cells at even coordinates. The algorithm carves corridors between
+ * passages, guaranteeing a perfect maze (exactly one path between any two
+ * passage cells) with winding corridors and dead ends.
+ *
+ * Requires odd-dimensioned rows/cols (e.g. 21×21) so the border stays walled.
+ */
+export function generateMaze(rows: number, cols: number): Grid {
+  // Start with every cell as a wall
+  const grid: Grid = Array.from({ length: rows }, () => Array(cols).fill(true));
+
+  const visited = new Set<string>();
+  const stack: [number, number][] = [];
+
+  // Carve the starting passage cell
+  const sr = 1;
+  const sc = 1;
+  grid[sr][sc] = false;
+  visited.add(`${sr},${sc}`);
+  stack.push([sr, sc]);
+
+  const dirs: [number, number][] = [
+    [-2, 0],
+    [2, 0],
+    [0, -2],
+    [0, 2],
+  ];
+
+  while (stack.length > 0) {
+    const [r, c] = stack[stack.length - 1];
+
+    // Collect unvisited passage-cell neighbours (2 steps away)
+    const unvisited: { nr: number; nc: number; wr: number; wc: number }[] = [];
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr;
+      const nc = c + dc;
+      if (
+        nr >= 1 &&
+        nr < rows - 1 &&
+        nc >= 1 &&
+        nc < cols - 1 &&
+        !visited.has(`${nr},${nc}`)
+      ) {
+        unvisited.push({ nr, nc, wr: r + dr / 2, wc: c + dc / 2 });
+      }
+    }
+
+    if (unvisited.length > 0) {
+      // Pick a random unvisited neighbour
+      const { nr, nc, wr, wc } =
+        unvisited[Math.floor(Math.random() * unvisited.length)];
+      grid[wr][wc] = false; // knock down wall between
+      grid[nr][nc] = false; // carve passage
+      visited.add(`${nr},${nc}`);
+      stack.push([nr, nc]);
+    } else {
+      stack.pop(); // backtrack
+    }
   }
+
   return grid;
 }
 

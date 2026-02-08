@@ -3,6 +3,7 @@ interface Props {
   nodeCount: number;
   totalWork: number;
   complexity: string;
+  shape: 'chain' | 'binary-tree';
 }
 
 function StatCard({ label, value }: { label: string; value: string }) {
@@ -16,9 +17,15 @@ function StatCard({ label, value }: { label: string; value: string }) {
   );
 }
 
-export default function TreeStats({ depth, nodeCount, totalWork, complexity }: Props) {
+const SHAPE_LABELS: Record<string, string> = {
+  chain: 'Chain',
+  'binary-tree': 'Binary Tree',
+};
+
+export default function TreeStats({ depth, nodeCount, totalWork, complexity, shape }: Props) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+      <StatCard label="Shape" value={SHAPE_LABELS[shape] ?? shape} />
       <StatCard label="Depth" value={`${depth} level${depth !== 1 ? 's' : ''}`} />
       <StatCard label="Nodes" value={nodeCount.toLocaleString()} />
       <StatCard label="Total Work" value={totalWork.toLocaleString()} />

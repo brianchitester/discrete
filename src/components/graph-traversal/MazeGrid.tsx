@@ -1,9 +1,9 @@
 import InteractiveGrid from '../shared/InteractiveGrid';
 import type { Grid, GridCell, TraversalStep } from '../../lib/graph';
 
-const ROWS = 12;
-const COLS = 12;
-const CELL_SIZE = 36;
+const ROWS = 21;
+const COLS = 21;
+const CELL_SIZE = 22;
 
 interface Props {
   grid: Grid;

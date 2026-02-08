@@ -97,6 +97,7 @@ export default function RecursionPlayground() {
         nodeCount={nodeCount}
         totalWork={totalWork}
         complexity={template.complexity}
+        shape={template.shape}
       />
 
       {/* Tree visualization */}
@@ -104,6 +105,22 @@ export default function RecursionPlayground() {
         <h3 className="text-xs font-medium text-text-muted dark:text-text-dark-muted uppercase tracking-wide">
           Recursion Tree for {template.label} with n={nValue}
         </h3>
+
+        {/* Contextual callout for chain-shaped trees */}
+        {template.shape === 'chain' && (
+          <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-primary/10 dark:bg-primary/20 border border-primary/20 dark:border-primary/30">
+            <span className="text-primary text-sm mt-0.5 shrink-0" aria-hidden="true">&#9432;</span>
+            <p className="text-xs text-text dark:text-text-dark leading-relaxed">
+              <strong>Why is this a chain, not a branching tree?</strong>{' '}
+              This recurrence makes only <strong>one</strong> recursive call per step,
+              so the &ldquo;tree&rdquo; degenerates into a straight chain.
+              Compare with <span className="font-mono">T(n)&nbsp;=&nbsp;2T(n/2)&nbsp;+&nbsp;n</span> (Merge Sort),
+              which makes <strong>two</strong> calls and produces a true branching tree.
+              The chain shape directly shows why the total work is simply the sum down one path.
+            </p>
+          </div>
+        )}
+
         <div className="p-3 rounded-lg border border-border dark:border-border-dark bg-surface-alt dark:bg-surface-dark-alt">
           <RecurrenceTree root={tree} />
         </div>

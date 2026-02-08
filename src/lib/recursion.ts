@@ -13,6 +13,7 @@ export interface RecurrenceTemplate {
   label: string;       // e.g. "T(n) = 2T(n/2) + n"
   description: string; // e.g. "Merge Sort"
   complexity: string;  // Big-O class
+  shape: 'chain' | 'binary-tree'; // visual shape of the recursion tree
   build: (n: number) => TreeNode;
   maxN: number;
   defaultN: number;
@@ -91,6 +92,7 @@ export const RECURRENCE_TEMPLATES: RecurrenceTemplate[] = [
     label: 'T(n) = T(n−1) + 1',
     description: 'Linear Recursion',
     complexity: 'O(n)',
+    shape: 'chain',
     build(n: number) {
       resetId();
       return buildLinear(n);
@@ -103,6 +105,7 @@ export const RECURRENCE_TEMPLATES: RecurrenceTemplate[] = [
     label: 'T(n) = 2T(n/2) + n',
     description: 'Merge Sort',
     complexity: 'O(n log n)',
+    shape: 'binary-tree',
     build(n: number) {
       resetId();
       return buildMergeSort(n);
@@ -115,6 +118,7 @@ export const RECURRENCE_TEMPLATES: RecurrenceTemplate[] = [
     label: 'T(n) = T(n/2) + 1',
     description: 'Binary Search',
     complexity: 'O(log n)',
+    shape: 'chain',
     build(n: number) {
       resetId();
       return buildBinarySearch(n);
