@@ -1,0 +1,56 @@
+---
+import ThemeToggle from '../components/shared/ThemeToggle.tsx';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Interactive discrete math playgrounds — learn through aha moments' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} | Discrete Math</title>
+    <script is:inline>
+      // Prevent flash of wrong theme
+      (function() {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <nav class="sticky top-0 z-50 border-b border-border dark:border-border-dark bg-surface/80 dark:bg-surface-dark/80 backdrop-blur-sm">
+      <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+        <a href="/" class="font-bold text-lg hover:text-primary dark:hover:text-primary-light transition-colors">
+          Discrete Math
+        </a>
+        <div class="flex items-center gap-4">
+          <a href="/concepts/graph-traversal" class="text-sm text-text-muted dark:text-text-dark-muted hover:text-text dark:hover:text-text-dark transition-colors hidden sm:block">Graphs</a>
+          <a href="/concepts/growth-rates" class="text-sm text-text-muted dark:text-text-dark-muted hover:text-text dark:hover:text-text-dark transition-colors hidden sm:block">Big-O</a>
+          <a href="/concepts/hashing-collisions" class="text-sm text-text-muted dark:text-text-dark-muted hover:text-text dark:hover:text-text-dark transition-colors hidden sm:block">Hashing</a>
+          <ThemeToggle client:load />
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="border-t border-border dark:border-border-dark py-6 mt-12">
+      <div class="max-w-6xl mx-auto px-4 text-center text-sm text-text-muted dark:text-text-dark-muted">
+        Built for learning. Every concept is a playground.
+      </div>
+    </footer>
+  </body>
+</html>

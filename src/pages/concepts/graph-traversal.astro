@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TraversalPlayground from '../../components/graph-traversal/TraversalPlayground';
+import '../../styles/global.css';
+---
+
+<BaseLayout title="Graph Traversal">
+  <section class="max-w-6xl mx-auto px-4 py-10">
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-3">Graph Traversal: Wave vs. Dive</h1>
+      <p class="text-text-muted dark:text-text-dark-muted max-w-2xl text-lg">
+        How do you find a path through a maze? BFS spreads like a wave, exploring every direction equally.
+        DFS dives down a single path, backtracking when stuck. Draw walls, pick an algorithm, and watch it search.
+      </p>
+    </div>
+    <TraversalPlayground client:load />
+  </section>
+</BaseLayout>

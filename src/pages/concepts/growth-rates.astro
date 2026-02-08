@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GrowthRacePlayground from '../../components/growth-rates/GrowthRacePlayground';
+import '../../styles/global.css';
+---
+
+<BaseLayout title="Growth Rates">
+  <section class="max-w-6xl mx-auto px-4 pt-12 pb-6 text-center">
+    <h1 class="text-4xl font-bold mb-3">Growth Rates: Beat the Clock</h1>
+    <p class="text-text-muted dark:text-text-dark-muted max-w-2xl mx-auto">
+      How fast does your algorithm grow? Drag the slider, toggle complexity classes,
+      and watch Big-O come alive.
+    </p>
+  </section>
+
+  <GrowthRacePlayground client:load />
+</BaseLayout>
