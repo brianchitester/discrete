@@ -6,7 +6,7 @@ Interactive playgrounds that turn abstract discrete math concepts into aha momen
 
 ## Current Status
 
-**4 of 9 concept interactives are implemented:**
+**5 of 9 concept interactives are implemented:**
 
 | Concept | Route | Status |
 |---------|-------|--------|
@@ -14,7 +14,7 @@ Interactive playgrounds that turn abstract discrete math concepts into aha momen
 | Growth Rates ("Beat the Clock") | `/concepts/growth-rates` | Done |
 | Hashing Collisions ("Hash Carnival") | `/concepts/hashing-collisions` | Done |
 | Subsets ("Subset Dungeon") | `/concepts/subsets` | Done |
-| Permutations ("Rune Lock") | `/c/permutations` | Planned |
+| Permutations ("Rune Lock") | `/concepts/permutations` | Done |
 | All-Pairs ("Stress Test") | `/c/pairs` | Planned |
 | Invariants ("Invariant Detective") | `/c/invariants` | Planned |
 | Birthday Paradox ("Collision Counter") | `/c/birthday-paradox` | Planned |
@@ -42,7 +42,8 @@ src/
 │       ├── graph-traversal.astro      # Concept pages (one per interactive)
 │       ├── growth-rates.astro
 │       ├── hashing-collisions.astro
-│       └── subsets.astro
+│       ├── subsets.astro
+│       └── permutations.astro
 ├── layouts/
 │   └── BaseLayout.astro               # Shell: nav, dark mode, footer
 ├── components/
@@ -71,12 +72,19 @@ src/
 │   │   ├── DraggableItem.tsx
 │   │   ├── HashFunctionSelector.tsx
 │   │   └── CollisionCounter.tsx
-│   └── subsets/                      # Subset enumeration interactive
-│       ├── SubsetsPlayground.tsx       # Orchestrator
-│       ├── ElementPool.tsx
-│       ├── SubsetCounter.tsx
-│       ├── SubsetGrid.tsx
-│       └── SizeDistributionChart.tsx
+│   ├── subsets/                      # Subset enumeration interactive
+│   │   ├── SubsetsPlayground.tsx       # Orchestrator
+│   │   ├── ElementPool.tsx
+│   │   ├── SubsetCounter.tsx
+│   │   ├── SubsetGrid.tsx
+│   │   └── SizeDistributionChart.tsx
+│   └── permutations/                 # Factorial/permutations interactive
+│       ├── PermutationsPlayground.tsx   # Orchestrator
+│       ├── RunePool.tsx
+│       ├── LockDisplay.tsx
+│       ├── PermutationGrid.tsx
+│       ├── FactorialCounter.tsx
+│       └── GrowthComparisonChart.tsx
 ├── hooks/
 │   ├── useAnimationController.ts      # Step-based animation (pre-computed arrays)
 │   ├── useProgress.ts                 # Milestone tracking per concept
@@ -86,13 +94,15 @@ src/
 │   ├── graph.ts                       # Graph generation & traversal logic
 │   ├── growth.ts                      # Growth function computations
 │   ├── hashing.ts                     # Hash function implementations
-│   └── subsets.ts                     # Subset generation & combinatorics
+│   ├── subsets.ts                     # Subset generation & combinatorics
+│   └── permutations.ts               # Factorial, permutation generation & comparison
 ├── content/
 │   └── concepts/                      # Markdown with frontmatter
 │       ├── graph-traversal.md         # title, description, milestones[]
 │       ├── growth-rates.md
 │       ├── hashing-collisions.md
-│       └── subsets.md
+│       ├── subsets.md
+│       └── permutations.md
 ├── content.config.ts                  # Astro content collection schema
 └── styles/
     └── global.css                     # Tailwind imports + custom properties
@@ -131,8 +141,8 @@ npm run preview    # Preview production build locally
 - 3 priority interactives: Graphs, Big-O, Hashing
 
 **M4 — Full concept set** (in progress)
-- Subsets interactive done
-- Remaining 5 interactives: Permutations, Pairs, Invariants, Birthday Paradox, Recursion
+- Subsets and Permutations interactives done
+- Remaining 4 interactives: Pairs, Invariants, Birthday Paradox, Recursion
 
 **M5 — Stretch**
 - Playground "boss level" combining concepts
@@ -145,8 +155,6 @@ Each new concept follows this pattern:
 
 | Concept | Interactive | Core Aha |
 |---------|------------|----------|
-| Subsets | "Subset Dungeon" | Exponential blowup: 2^n subsets from n items |
-| Permutations | "Rune Lock" | Permutations vs combinations and when order matters |
 | All-Pairs | "Stress Test" | C(n,2) grows quadratically — every pair counts |
 | Invariants | "Invariant Detective" | Some quantity never changes, no matter the moves |
 | Birthday Paradox | "Collision Counter" | Collisions arrive shockingly early (Monte Carlo sim) |
@@ -157,10 +165,10 @@ Each new concept follows this pattern:
 **Epic A — Site scaffold** (done): project init, routes, layout, progress, design system
 
 **Epic B — Shared engine** (partially done):
-- Done: animation hook, progress API, graph/growth/hashing/subsets math
+- Done: animation hook, progress API, graph/growth/hashing/subsets/permutations math
 - Remaining: seeded RNG, chart primitives, input helpers, query param state codec
 
-**Epic C — Interactives**: C1 Growth Rates (done), C2 Graphs (done), C3 Hashing (done), C4 Subsets (done), C5-C9 planned
+**Epic C — Interactives**: C1 Growth Rates (done), C2 Graphs (done), C3 Hashing (done), C4 Subsets (done), C5 Permutations (done), C6-C9 planned
 
 **Epic D — Finish**: consistency pass, Lighthouse/perf baseline, tour mode, launch checklist
 
