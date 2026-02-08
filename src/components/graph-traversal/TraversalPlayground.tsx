@@ -8,7 +8,7 @@ import {
   generateMaze,
   createEmptyGrid,
 } from '../../lib/graph';
-import { useAnimationController } from '../../hooks/useAnimationController';
+import { useAnimationController, type AnimationControls } from '../../hooks/useAnimationController';
 import { useProgress } from '../../hooks/useProgress';
 import MazeGrid from './MazeGrid';
 import QueueStackVisualizer from './QueueStackVisualizer';
@@ -38,6 +38,7 @@ export default function TraversalPlayground() {
   const [grid, setGrid] = useState<Grid>(() => createEmptyGrid(ROWS, COLS));
   const [algorithm, setAlgorithm] = useState<Algorithm>('bfs');
   const [wallsDrawn, setWallsDrawn] = useState(false);
+  const [visualizing, setVisualizing] = useState(false);
   const { markMilestone } = useProgress('graph-traversal');
 
   // Precompute traversal steps
@@ -51,12 +52,23 @@ export default function TraversalPlayground() {
 
   const { state: animState, controls: animControls } = useAnimationController(totalSteps);
 
+  // Wrap animation controls so starting the animation activates the overlay,
+  // and resetting via the ⏮ button clears it.
+  const wrappedControls = useMemo<AnimationControls>(() => ({
+    ...animControls,
+    play: () => { setVisualizing(true); animControls.play(); },
+    stepForward: () => { setVisualizing(true); animControls.stepForward(); },
+    stepBackward: () => { setVisualizing(true); animControls.stepBackward(); },
+    jumpTo: (step: number) => { setVisualizing(true); animControls.jumpTo(step); },
+    reset: () => { setVisualizing(false); animControls.reset(); },
+  }), [animControls]);
+
   const currentStep = animState.currentStep;
 
-  // Get current traversal step
-  const currentTraversalStep = algorithm === 'race' ? null : (activeSteps[currentStep] ?? null);
-  const bfsTraversalStep = bfsSteps[Math.min(currentStep, bfsSteps.length - 1)] ?? null;
-  const dfsTraversalStep = dfsSteps[Math.min(currentStep, dfsSteps.length - 1)] ?? null;
+  // Get current traversal step (only when actively visualizing)
+  const currentTraversalStep = algorithm === 'race' || !visualizing ? null : (activeSteps[currentStep] ?? null);
+  const bfsTraversalStep = visualizing ? (bfsSteps[Math.min(currentStep, bfsSteps.length - 1)] ?? null) : null;
+  const dfsTraversalStep = visualizing ? (dfsSteps[Math.min(currentStep, dfsSteps.length - 1)] ?? null) : null;
 
   // Track milestones
   useEffect(() => {
@@ -88,6 +100,7 @@ export default function TraversalPlayground() {
       return next;
     });
     setWallsDrawn(true);
+    setVisualizing(false);
     animControls.reset();
   }, [animControls]);
 
@@ -99,21 +112,26 @@ export default function TraversalPlayground() {
       return next;
     });
     setWallsDrawn(true);
-  }, []);
+    setVisualizing(false);
+    animControls.reset();
+  }, [animControls]);
 
   const handleAlgorithmChange = useCallback((algo: Algorithm) => {
     setAlgorithm(algo);
+    setVisualizing(false);
     animControls.reset();
   }, [animControls]);
 
   const handleGenerateMaze = useCallback(() => {
     setGrid(generateMaze(ROWS, COLS));
     setWallsDrawn(true);
+    setVisualizing(false);
     animControls.reset();
   }, [animControls]);
 
   const handleClearGrid = useCallback(() => {
     setGrid(createEmptyGrid(ROWS, COLS));
+    setVisualizing(false);
     animControls.reset();
   }, [animControls]);
 
@@ -125,7 +143,7 @@ export default function TraversalPlayground() {
         onGenerateMaze={handleGenerateMaze}
         onClearGrid={handleClearGrid}
         animationState={animState}
-        animationControls={animControls}
+        animationControls={wrappedControls}
       />
 
       <Legend items={legendItems} />

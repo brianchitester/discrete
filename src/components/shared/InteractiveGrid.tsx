@@ -71,8 +71,9 @@ export default function InteractiveGrid({
       {/* Background */}
       <rect width={width} height={height} fill="currentColor" className="text-surface-alt dark:text-surface-dark-alt" />
 
-      {/* Colored cells */}
-      {cells.map(cell => (
+      {/* Colored cells – render from de-duplicated map so each position
+          has exactly one <rect> and React keys are unique. */}
+      {Array.from(cellMap.values()).map(cell => (
         <rect
           key={`${cell.row},${cell.col}`}
           x={cell.col * cellSize}
