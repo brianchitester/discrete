@@ -6,21 +6,21 @@ Interactive playgrounds that turn abstract discrete math concepts into aha momen
 
 ## Current Status
 
-**6 of 9 concept interactives are implemented:**
+**7 of 9 concept interactives are implemented:**
 
-| Concept | Route | Status |
-|---------|-------|--------|
-| Graph Traversal ("Maze Runner") | `/concepts/graph-traversal` | Done |
-| Growth Rates ("Beat the Clock") | `/concepts/growth-rates` | Done |
-| Hashing Collisions ("Hash Carnival") | `/concepts/hashing-collisions` | Done |
-| Subsets ("Subset Dungeon") | `/concepts/subsets` | Done |
-| Permutations ("Rune Lock") | `/concepts/permutations` | Done |
-| All-Pairs ("Stress Test") | `/concepts/all-pairs` | Done |
-| Invariants ("Invariant Detective") | `/c/invariants` | Planned |
-| Birthday Paradox ("Collision Counter") | `/c/birthday-paradox` | Planned |
-| Recursion ("Recurrence Tree Builder") | `/c/recursion` | Planned |
+| Concept                                | Route                          | Status  |
+| -------------------------------------- | ------------------------------ | ------- |
+| Graph Traversal ("Maze Runner")        | `/concepts/graph-traversal`    | Done    |
+| Growth Rates ("Beat the Clock")        | `/concepts/growth-rates`       | Done    |
+| Hashing Collisions ("Hash Carnival")   | `/concepts/hashing-collisions` | Done    |
+| Subsets ("Subset Dungeon")             | `/concepts/subsets`            | Done    |
+| Permutations ("Rune Lock")             | `/concepts/permutations`       | Done    |
+| All-Pairs ("Stress Test")              | `/concepts/all-pairs`          | Done    |
+| Invariants ("Invariant Detective")     | `/concepts/invariants`         | Done    |
+| Birthday Paradox ("Collision Counter") | `/concepts/birthday-paradox`   | Planned |
+| Recursion ("Recurrence Tree Builder")  | `/concepts/recursion`          | Planned |
 
-Stretch goals: `/playground` combined "boss level", `/c/toposort` task ordering.
+Stretch goals: `/playground` combined "boss level", `/concepts/toposort` task ordering.
 
 ## Tech Stack
 
@@ -44,7 +44,8 @@ src/
 │       ├── hashing-collisions.astro
 │       ├── subsets.astro
 │       ├── permutations.astro
-│       └── all-pairs.astro
+│       ├── all-pairs.astro
+│       └── invariants.astro
 ├── layouts/
 │   └── BaseLayout.astro               # Shell: nav, dark mode, footer
 ├── components/
@@ -86,12 +87,17 @@ src/
 │   │   ├── PermutationGrid.tsx
 │   │   ├── FactorialCounter.tsx
 │   │   └── GrowthComparisonChart.tsx
-│   └── all-pairs/                    # All-pairs stress test interactive
-│       ├── AllPairsPlayground.tsx      # Orchestrator
-│       ├── NodePool.tsx
-│       ├── PairCounter.tsx
-│       ├── PairNetwork.tsx
-│       └── GrowthChart.tsx
+│   ├── all-pairs/                    # All-pairs stress test interactive
+│   │   ├── AllPairsPlayground.tsx      # Orchestrator
+│   │   ├── NodePool.tsx
+│   │   ├── PairCounter.tsx
+│   │   ├── PairNetwork.tsx
+│   │   └── GrowthChart.tsx
+│   └── invariants/                   # Invariant detective interactive
+│       ├── InvariantsPlayground.tsx    # Orchestrator
+│       ├── ScenarioSelector.tsx
+│       ├── StateVisualizer.tsx
+│       └── InvariantPanel.tsx
 ├── hooks/
 │   ├── useAnimationController.ts      # Step-based animation (pre-computed arrays)
 │   ├── useProgress.ts                 # Milestone tracking per concept
@@ -103,7 +109,8 @@ src/
 │   ├── hashing.ts                     # Hash function implementations
 │   ├── subsets.ts                     # Subset generation & combinatorics
 │   ├── permutations.ts               # Factorial, permutation generation & comparison
-│   └── pairs.ts                      # All-pairs generation, scenarios & quadratic growth
+│   ├── pairs.ts                      # All-pairs generation, scenarios & quadratic growth
+│   └── invariants.ts                 # Invariant scenarios, bug injection & proof annotations
 ├── content/
 │   └── concepts/                      # Markdown with frontmatter
 │       ├── graph-traversal.md         # title, description, milestones[]
@@ -111,7 +118,8 @@ src/
 │       ├── hashing-collisions.md
 │       ├── subsets.md
 │       ├── permutations.md
-│       └── all-pairs.md
+│       ├── all-pairs.md
+│       └── invariants.md
 ├── content.config.ts                  # Astro content collection schema
 └── styles/
     └── global.css                     # Tailwind imports + custom properties
@@ -141,19 +149,24 @@ npm run preview    # Preview production build locally
 ### Milestones
 
 **M1 — Skeleton shipped** (complete)
+
 - Homepage, concept directory, BaseLayout, dark mode, nav
 
 **M2 — Shared engine ready** (complete)
+
 - Progress/milestones system, animation controller hook, shared UI components
 
 **M3 — MVP launch** (complete)
+
 - 3 priority interactives: Graphs, Big-O, Hashing
 
 **M4 — Full concept set** (in progress)
-- Subsets, Permutations, and All-Pairs interactives done
-- Remaining 3 interactives: Invariants, Birthday Paradox, Recursion
+
+- Subsets, Permutations, All-Pairs, and Invariants interactives done
+- Remaining 2 interactives: Birthday Paradox, Recursion
 
 **M5 — Stretch**
+
 - Playground "boss level" combining concepts
 - Shareable seeds via URL query params
 - Tour mode (next/prev concept navigation)
@@ -162,21 +175,21 @@ npm run preview    # Preview production build locally
 
 Each new concept follows this pattern:
 
-| Concept | Interactive | Core Aha |
-|---------|------------|----------|
-| Invariants | "Invariant Detective" | Some quantity never changes, no matter the moves |
-| Birthday Paradox | "Collision Counter" | Collisions arrive shockingly early (Monte Carlo sim) |
-| Recursion | "Recurrence Tree Builder" | Visualize how recurrences unfold into trees |
+| Concept          | Interactive               | Core Aha                                             |
+| ---------------- | ------------------------- | ---------------------------------------------------- |
+| Birthday Paradox | "Collision Counter"       | Collisions arrive shockingly early (Monte Carlo sim) |
+| Recursion        | "Recurrence Tree Builder" | Visualize how recurrences unfold into trees          |
 
 ### Epic Breakdown
 
 **Epic A — Site scaffold** (done): project init, routes, layout, progress, design system
 
 **Epic B — Shared engine** (partially done):
-- Done: animation hook, progress API, graph/growth/hashing/subsets/permutations/pairs math
+
+- Done: animation hook, progress API, graph/growth/hashing/subsets/permutations/pairs/invariants math
 - Remaining: seeded RNG, chart primitives, input helpers, query param state codec
 
-**Epic C — Interactives**: C1 Growth Rates (done), C2 Graphs (done), C3 Hashing (done), C4 Subsets (done), C5 Permutations (done), C6 All-Pairs (done), C7-C9 planned
+**Epic C — Interactives**: C1 Growth Rates (done), C2 Graphs (done), C3 Hashing (done), C4 Subsets (done), C5 Permutations (done), C6 All-Pairs (done), C7 Invariants (done), C8-C9 planned
 
 **Epic D — Finish**: consistency pass, Lighthouse/perf baseline, tour mode, launch checklist
 
@@ -192,6 +205,7 @@ Each new concept follows this pattern:
 ## Adding a New Concept
 
 1. Create `src/content/concepts/<slug>.md` with frontmatter:
+
    ```yaml
    ---
    title: "Concept Name"

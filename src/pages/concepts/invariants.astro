@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import InvariantsPlayground from '../../components/invariants/InvariantsPlayground';
+import '../../styles/global.css';
+---
+
+<BaseLayout title="Invariants">
+  <section class="max-w-6xl mx-auto px-4 py-10">
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-3">Invariant Detective</h1>
+      <p class="text-text-muted dark:text-text-dark-muted max-w-2xl text-lg">
+        Every correct algorithm maintains an invariant — a property that is true before and after every step.
+        Bugs happen when an invariant breaks. Step through these algorithms, and flag the exact moment the invariant fails.
+      </p>
+    </div>
+    <InvariantsPlayground client:load />
+  </section>
+</BaseLayout>

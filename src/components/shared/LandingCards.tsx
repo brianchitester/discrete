@@ -50,6 +50,14 @@ const concepts = [
     conceptId: 'all-pairs' as const,
     totalMilestones: 4,
   },
+  {
+    title: 'Invariants',
+    icon: '\u{1F50E}',
+    href: '/concepts/invariants',
+    description: 'Step through algorithms and spot the exact moment an invariant breaks. Debug like a detective — find where the proof fails.',
+    conceptId: 'invariants' as const,
+    totalMilestones: 4,
+  },
 ] as const;
 
 export default function LandingCards() {
